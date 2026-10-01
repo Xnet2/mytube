@@ -259,6 +259,42 @@ body.dark .logo-img{filter:invert(1) hue-rotate(180deg) saturate(6);}
 .vgrid.vgrid-large .vch,.vgrid.vgrid-large .vmeta{font-size:12.5px;}
 .vgrid.vgrid-large .vav{width:40px;height:40px;}
 
+/* FEED (דף "פיד") */
+.feed{max-width:620px;margin:0 auto;}
+.feed-head{margin-bottom:20px;}
+.feed-head h1{font-size:24px;font-weight:800;letter-spacing:-.3px;}
+.feed-head p{font-size:13px;color:var(--txt3);margin-top:5px;}
+.fpost{background:var(--surface);border:1px solid var(--border);border-radius:22px;overflow:hidden;margin-bottom:24px;box-shadow:var(--raised);transition:box-shadow .25s,border-color .25s;cursor:default;}
+.fpost:hover{box-shadow:0 10px 32px var(--shadow);border-color:var(--bg4);}
+.fp-head{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.fp-head .vav{width:44px;height:44px;font-size:14px;}
+.fp-who{min-width:0;flex:1;}
+.fp-name{font-size:14.5px;font-weight:700;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fp-name:hover{text-decoration:underline;}
+.fp-time{font-size:12px;color:var(--txt3);margin-top:2px;}
+.fp-new{background:var(--blue);color:#06121f;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:999px;flex-shrink:0;}
+.fmedia{position:relative;aspect-ratio:16/9;background:var(--bg3);cursor:pointer;overflow:hidden;}
+.fmedia img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
+.fmedia:hover img{transform:scale(1.03);}
+.fmedia-play{position:absolute;top:50%;left:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;pointer-events:none;}
+.fmedia:hover .fmedia-play{transform:scale(1.1);background:var(--red);}
+.fmedia-play svg{width:32px;height:32px;fill:#fff;}
+.fp-band{background:var(--bg2);padding:16px 0;display:flex;justify-content:center;}
+.fmedia.short{width:min(76%,320px);aspect-ratio:9/16;border-radius:18px;}
+.fp-body{padding:14px 16px 4px;}
+.fp-title{font-size:16px;font-weight:600;line-height:1.5;color:var(--txt);}
+.fp-actions{display:flex;gap:8px;padding:10px 16px 16px;flex-wrap:wrap;}
+.fpost .fbtn{position:static;width:auto;height:38px;padding:0 15px;border-radius:19px;background:var(--bg2);color:var(--txt2);font-family:var(--font);font-size:13px;font-weight:500;gap:7px;border:1px solid var(--border);}
+.fpost .fbtn:hover{transform:none;background:var(--bg3);color:var(--txt);}
+.fpost .fbtn svg{width:18px;height:18px;fill:currentColor;}
+.fpost .like-btn.on{color:var(--red);background:var(--tint);border-color:transparent;}
+.fpost .like-btn.on svg{fill:var(--red);}
+.fpost .wl-btn.on{color:var(--red);background:var(--tint);border-color:transparent;}
+.feed-end{text-align:center;color:var(--txt3);font-size:13px;padding:18px 0 40px;min-height:60px;}
+.feed-spin{width:26px;height:26px;margin:0 auto;border-radius:50%;border:3px solid var(--bg4);border-top-color:var(--red);animation:feedspin .8s linear infinite;}
+@keyframes feedspin{to{transform:rotate(360deg)}}
+@media(max-width:760px){.fpost{border-radius:18px;margin-bottom:18px;}.fmedia.short{width:min(82%,300px);}}
+
 /* PLAYER MODAL */
 #player-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
 #player-modal.open{display:flex;}
@@ -570,8 +606,8 @@ body.dark .logo-img{filter:invert(1) hue-rotate(180deg) saturate(6);}
     <span class="nl">אהבתי</span>
   </div>
   <div class="nitem" id="n-following" onclick="setSection('following',this)">
-    <span class="ni"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"></path></svg></span>
-    <span class="nl">עוקב אחרי</span>
+    <span class="ni"><svg viewBox="0 0 24 24"><path d="M8 8H6v7c0 1.1.9 2 2 2h9v-2H8V8zm12-5h-8c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 8h-8V7h8v4z"></path></svg></span>
+    <span class="nl">פיד</span>
   </div>
   <div class="nitem" id="n-watched" onclick="setSection('watched',this)">
     <span class="ni"><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path></svg></span>
@@ -2035,6 +2071,7 @@ function renderContent() {
   const ct = document.getElementById('content');
   ct.innerHTML = '';
   activeInlineId = null;
+  if (section !== 'following') feedShown = FEED_STEP;
 
   if (section === 'settings') { renderSettingsPage(ct); return; }
 
@@ -2122,6 +2159,8 @@ function renderContent() {
       </div>`;
     return;
   }
+
+  if (section === 'following') { renderFeed(ct, vids); return; }
 
   const grid = document.createElement('div');
   const isLarge = inlineMode && (section === 'all' || section === 'channel');
@@ -2353,6 +2392,81 @@ function videoCardHtml(v) {
       </div>
     </div>
   </div>`;
+}
+
+/* ============ FEED ============ */
+const FEED_STEP = 10;
+let feedShown = FEED_STEP, feedList = [], feedObs = null;
+const FEED_SHARE_SVG = '<svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>';
+const FEED_SAVE_SVG = '<svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>';
+
+function feedPostHtml(v) {
+  const id = x(v.id);
+  const ch = x(v.channelId);
+  const play = `toggleInlinePlay('${id}')`;
+  const media = `<div class="fmedia${v.isShort ? ' short' : ''}" id="thumb-${id}" onclick="${play}">
+      <img src="${x(thumbSrc(v.id, 0))}" data-vid="${id}" data-q="0" loading="lazy" onload="thumbLoaded(this)" onerror="thumbNext(this)">
+      <span class="fmedia-play">${ICON_PLAY}</span>
+      ${v.isShort ? `<span class="short-flag" title="שורטס">${SHORT_ICON_SVG}</span>` : (v.seconds ? `<span class="vdur">${fmtDuration(v.seconds)}</span>` : '')}
+      ${netfreeMode && nfStatus[v.id] === 'open' ? NF_DOT_HTML : ''}
+    </div>`;
+  return `
+  <article class="fpost vcard" data-vid="${id}">
+    <div class="fp-head">
+      <div class="vav" onclick="openChannelPage('${ch}')">${v.channelThumb ? `<img src="${x(v.channelThumb)}">` : x((v.channelTitle || '?').slice(0, 2))}</div>
+      <div class="fp-who">
+        <div class="fp-name" onclick="openChannelPage('${ch}')">${x(v.channelTitle)}</div>
+        <div class="fp-time">${timeAgo(v.publishedAt)}</div>
+      </div>
+      ${isVideoNew(v) ? '<span class="fp-new">חדש</span>' : ''}
+    </div>
+    ${v.isShort ? `<div class="fp-band">${media}</div>` : media}
+    <div class="fp-body"><h3 class="fp-title">${x(v.title)}</h3></div>
+    <div class="fp-actions">
+      <button class="fbtn like-btn ${isLiked(v.id) ? 'on' : ''}" data-vid="${id}" onclick="toggleLiked('${id}')">${HEART_ICON_SVG}<span>אהבתי</span></button>
+      <button class="fbtn wl-btn ${isInWatchLater(v.id) ? 'on' : ''}" data-vid="${id}" onclick="toggleWatchLater('${id}')">${FEED_SAVE_SVG}<span>שמור</span></button>
+      <button class="fbtn" onclick="feedShare('${id}')">${FEED_SHARE_SVG}<span>שתף</span></button>
+    </div>
+  </article>`;
+}
+
+function renderFeed(ct, vids) {
+  feedList = vids;
+  ct.insertAdjacentHTML('beforeend', `
+    <div class="feed">
+      <div class="feed-head"><h1>פיד</h1><p>${vids.length} סרטונים מהערוצים שאתה עוקב אחריהם</p></div>
+      <div id="feed-list"></div>
+      <div id="feed-end" class="feed-end"></div>
+    </div>`);
+  feedFill();
+}
+
+function feedFill() {
+  const list = document.getElementById('feed-list');
+  const end = document.getElementById('feed-end');
+  if (!list || !end) return;
+  const upto = Math.min(feedShown, feedList.length);
+  if (list.children.length < upto) {
+    list.insertAdjacentHTML('beforeend', feedList.slice(list.children.length, upto).map(feedPostHtml).join(''));
+    applyNfHideDom();
+  }
+  if (feedObs) { feedObs.disconnect(); feedObs = null; }
+  if (upto < feedList.length) {
+    end.innerHTML = '<div class="feed-spin"></div>';
+    feedObs = new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting) { feedShown += FEED_STEP; feedFill(); }
+    }, { rootMargin: '900px 0px' });
+    feedObs.observe(end);
+  } else {
+    end.textContent = 'זה הכל, הגעת לסוף הפיד';
+  }
+}
+
+function feedShare(id) {
+  const url = 'https://www.youtube.com/watch?v=' + encodeURIComponent(id);
+  const done = function () { toast('הקישור הועתק'); };
+  try { navigator.clipboard.writeText(url).then(done, function () { toast(url); }); }
+  catch (e) { toast(url); }
 }
 
 function isVideoNew(v) {
@@ -3197,4 +3311,3 @@ function toast(m) { const t = document.getElementById('toast'); t.textContent = 
   <script src="https://xnet2.github.io/status/xnet-badge.js"></script>
 </body>
 </html>
-
