@@ -260,40 +260,42 @@ body.dark .logo-img{filter:invert(1) hue-rotate(180deg) saturate(6);}
 .vgrid.vgrid-large .vav{width:40px;height:40px;}
 
 /* FEED (דף "פיד") */
-.feed{max-width:620px;margin:0 auto;}
-.feed-head{margin-bottom:20px;}
-.feed-head h1{font-size:24px;font-weight:800;letter-spacing:-.3px;}
-.feed-head p{font-size:13px;color:var(--txt3);margin-top:5px;}
-.fpost{background:var(--surface);border:1px solid var(--border);border-radius:22px;overflow:hidden;margin-bottom:24px;box-shadow:var(--raised);transition:box-shadow .25s,border-color .25s;cursor:default;}
-.fpost:hover{box-shadow:0 10px 32px var(--shadow);border-color:var(--bg4);}
-.fp-head{display:flex;align-items:center;gap:12px;padding:14px 16px;}
-.fp-head .vav{width:44px;height:44px;font-size:14px;}
-.fp-who{min-width:0;flex:1;}
-.fp-name{font-size:14.5px;font-weight:700;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.feed{max-width:470px;margin:0 auto;}
+#content:has(.feed) > .nf-note{max-width:470px;margin:0 auto 16px;}
+.feed-head{margin-bottom:18px;padding:0 4px;}
+.feed-head h1{font-size:22px;font-weight:800;letter-spacing:-.4px;}
+.feed-head p{font-size:12.5px;color:var(--txt3);margin-top:4px;}
+.fpost{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:14px 14px 10px;margin-bottom:14px;box-shadow:var(--raised);cursor:default;}
+.fp-head{display:flex;align-items:center;gap:11px;margin-bottom:10px;}
+.fp-head .vav{width:38px;height:38px;font-size:13px;box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--bg4);}
+.fp-who{min-width:0;flex:1;display:flex;flex-direction:column;gap:1px;}
+.fp-name{font-size:14px;font-weight:700;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3;}
 .fp-name:hover{text-decoration:underline;}
-.fp-time{font-size:12px;color:var(--txt3);margin-top:2px;}
-.fp-new{background:var(--blue);color:#06121f;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:999px;flex-shrink:0;}
-.fmedia{position:relative;aspect-ratio:16/9;background:var(--bg3);cursor:pointer;overflow:hidden;}
+.fp-time{font-size:11.5px;color:var(--txt3);}
+.fp-new{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;box-shadow:0 0 0 4px rgba(62,166,255,.18);}
+.fp-title{font-size:14.5px;font-weight:500;line-height:1.55;color:var(--txt);margin-bottom:11px;padding:0 2px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.fmedia-row{display:flex;justify-content:center;}
+.fmedia{position:relative;width:100%;aspect-ratio:16/9;background:var(--bg3);border-radius:16px;overflow:hidden;cursor:pointer;}
+.fmedia.short{width:62%;aspect-ratio:9/16;}
 .fmedia img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
-.fmedia:hover img{transform:scale(1.03);}
-.fmedia-play{position:absolute;top:50%;left:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;pointer-events:none;}
-.fmedia:hover .fmedia-play{transform:scale(1.1);background:var(--red);}
-.fmedia-play svg{width:32px;height:32px;fill:#fff;}
-.fp-band{background:var(--bg2);padding:16px 0;display:flex;justify-content:center;}
-.fmedia.short{width:min(76%,320px);aspect-ratio:9/16;border-radius:18px;}
-.fp-body{padding:14px 16px 4px;}
-.fp-title{font-size:16px;font-weight:600;line-height:1.5;color:var(--txt);}
-.fp-actions{display:flex;gap:8px;padding:10px 16px 16px;flex-wrap:wrap;}
-.fpost .fbtn{position:static;width:auto;height:38px;padding:0 15px;border-radius:19px;background:var(--bg2);color:var(--txt2);font-family:var(--font);font-size:13px;font-weight:500;gap:7px;border:1px solid var(--border);}
+.fmedia:hover img{transform:scale(1.04);}
+.fmedia-play{position:absolute;top:50%;left:50%;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;pointer-events:none;}
+.fmedia:hover .fmedia-play{transform:scale(1.08);background:var(--red);}
+.fmedia-play svg{width:26px;height:26px;fill:#fff;}
+.fp-actions{display:flex;align-items:center;gap:2px;margin-top:8px;}
+.fp-actions .sp{flex:1;}
+.fpost .fbtn{position:static;width:34px;height:34px;padding:0;border-radius:50%;background:transparent;color:var(--txt2);border:none;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s,transform .15s;}
 .fpost .fbtn:hover{transform:none;background:var(--bg3);color:var(--txt);}
-.fpost .fbtn svg{width:18px;height:18px;fill:currentColor;}
-.fpost .like-btn.on{color:var(--red);background:var(--tint);border-color:transparent;}
-.fpost .like-btn.on svg{fill:var(--red);}
-.fpost .wl-btn.on{color:var(--red);background:var(--tint);border-color:transparent;}
-.feed-end{text-align:center;color:var(--txt3);font-size:13px;padding:18px 0 40px;min-height:60px;}
-.feed-spin{width:26px;height:26px;margin:0 auto;border-radius:50%;border:3px solid var(--bg4);border-top-color:var(--red);animation:feedspin .8s linear infinite;}
+.fpost .fbtn:active{transform:scale(.88);}
+.fpost .fbtn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.fpost .like-btn.on{background:transparent;color:var(--red);}
+.fpost .like-btn.on svg{fill:var(--red);stroke:var(--red);}
+.fpost .wl-btn.on{background:transparent;color:var(--txt);}
+.fpost .wl-btn.on svg{fill:currentColor;}
+.feed-end{text-align:center;color:var(--txt3);font-size:12.5px;padding:16px 0 40px;min-height:60px;}
+.feed-spin{width:24px;height:24px;margin:0 auto 8px;border-radius:50%;border:3px solid var(--bg4);border-top-color:var(--red);animation:feedspin .8s linear infinite;}
 @keyframes feedspin{to{transform:rotate(360deg)}}
-@media(max-width:760px){.fpost{border-radius:18px;margin-bottom:18px;}.fmedia.short{width:min(82%,300px);}}
+@media(max-width:760px){.feed{max-width:100%;}.fpost{border-radius:20px;}}
 
 /* PLAYER MODAL */
 #player-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
@@ -785,6 +787,7 @@ let loading = false;
 let lastError = null;
 let proStatus = { email: '', pro: false, checkedAt: 0 }; // מצב מנוי PRO
 let proChecking = false;
+let feedShown = 8, feedAll = [], feedList = [], feedObs = null, feedNfLimit = 150, feedChecking = false; // פיד
 
 const EMPTY_MESSAGES = {
   shorts: 'לא נמצאו שורטס מהערוצים שאתה עוקב אחריהם.',
@@ -1187,6 +1190,7 @@ function setNetfreeMode(on) {
     localStorage.setItem(NETFREE_MODE_KEY, '1');
     toast('בודק אילו סרטונים פתוחים בנטפרי...');
     scheduleNetfreeCheck(true);
+    if (section === 'following') renderContent();
   } else {
     const wasHiding = hideBlockedMode;
     netfreeMode = false;
@@ -1194,7 +1198,7 @@ function setNetfreeMode(on) {
     localStorage.setItem(NETFREE_MODE_KEY, '0');
     localStorage.setItem(NF_HIDE_KEY, '0');
     removeNetfreeDots();
-    if (wasHiding) refreshAfterNfChange();
+    if (wasHiding || section === 'following') refreshAfterNfChange();
   }
   updateNetfreeToggleUI();
   return true;
@@ -1234,6 +1238,7 @@ function scheduleNetfreeCheck(fresh) {
 function nfCandidateIds() {
   const set = new Set();
   document.querySelectorAll('[id^="thumb-"]').forEach(w => set.add(w.id.slice(6)));
+  if (section === 'following' && netfreeMode) feedAll.slice(0, feedNfLimit).forEach(v => { if (v && v.id) set.add(v.id); });
   if (hideBlockedMode) nfPool().slice(0, NF_PREFETCH).forEach(v => { if (v && v.id) set.add(v.id); });
   return [...set].filter(id => nfStatus[id] === undefined);
 }
@@ -1270,6 +1275,7 @@ async function runNetfreeCheck(fresh) {
       }
       markNetfreeDots();
       applyNfHideDom();
+      feedRefresh(false);
       updateNfNote();
       updateSettingsLive();
     }
@@ -1277,6 +1283,7 @@ async function runNetfreeCheck(fresh) {
     toast('בדיקת נטפרי נכשלה, ודא שהתוסף מעודכן');
   } finally {
     nfRunning = false;
+    if (!nfRerun) feedRefresh(true);
     saveNfCache();
     updateNfNote();
     updateSettingsLive();
@@ -2395,21 +2402,21 @@ function videoCardHtml(v) {
 }
 
 /* ============ FEED ============ */
-const FEED_STEP = 10;
-let feedShown = FEED_STEP, feedList = [], feedObs = null;
-const FEED_SHARE_SVG = '<svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>';
-const FEED_SAVE_SVG = '<svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>';
+const FEED_STEP = 8;
+const FEED_ICON_HEART = '<svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z"/></svg>';
+const FEED_ICON_SAVE = '<svg viewBox="0 0 24 24"><path d="M6 4h12v16.5l-6-4.2-6 4.2z"/></svg>';
+const FEED_ICON_SHARE = '<svg viewBox="0 0 24 24"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>';
+
+function feedVisibleList() {
+  // במצב נטפרי הפיד מציג רק סרטונים שאושרו כפתוחים
+  return netfreeMode ? feedAll.filter(v => nfStatus[v.id] === 'open') : feedAll;
+}
+function feedPending() {
+  return netfreeMode && feedAll.slice(0, feedNfLimit).some(v => nfStatus[v.id] === undefined);
+}
 
 function feedPostHtml(v) {
-  const id = x(v.id);
-  const ch = x(v.channelId);
-  const play = `toggleInlinePlay('${id}')`;
-  const media = `<div class="fmedia${v.isShort ? ' short' : ''}" id="thumb-${id}" onclick="${play}">
-      <img src="${x(thumbSrc(v.id, 0))}" data-vid="${id}" data-q="0" loading="lazy" onload="thumbLoaded(this)" onerror="thumbNext(this)">
-      <span class="fmedia-play">${ICON_PLAY}</span>
-      ${v.isShort ? `<span class="short-flag" title="שורטס">${SHORT_ICON_SVG}</span>` : (v.seconds ? `<span class="vdur">${fmtDuration(v.seconds)}</span>` : '')}
-      ${netfreeMode && nfStatus[v.id] === 'open' ? NF_DOT_HTML : ''}
-    </div>`;
+  const id = x(v.id), ch = x(v.channelId);
   return `
   <article class="fpost vcard" data-vid="${id}">
     <div class="fp-head">
@@ -2418,26 +2425,43 @@ function feedPostHtml(v) {
         <div class="fp-name" onclick="openChannelPage('${ch}')">${x(v.channelTitle)}</div>
         <div class="fp-time">${timeAgo(v.publishedAt)}</div>
       </div>
-      ${isVideoNew(v) ? '<span class="fp-new">חדש</span>' : ''}
+      ${isVideoNew(v) ? '<span class="fp-new" title="חדש"></span>' : ''}
     </div>
-    ${v.isShort ? `<div class="fp-band">${media}</div>` : media}
-    <div class="fp-body"><h3 class="fp-title">${x(v.title)}</h3></div>
+    <div class="fp-title">${x(v.title)}</div>
+    <div class="fmedia-row">
+      <div class="fmedia${v.isShort ? ' short' : ''}" id="thumb-${id}" onclick="toggleInlinePlay('${id}')">
+        <img src="${x(thumbSrc(v.id, 0))}" data-vid="${id}" data-q="0" loading="lazy" onload="thumbLoaded(this)" onerror="thumbNext(this)">
+        <span class="fmedia-play">${ICON_PLAY}</span>
+        ${v.isShort ? `<span class="short-flag" title="שורטס">${SHORT_ICON_SVG}</span>` : (v.seconds ? `<span class="vdur">${fmtDuration(v.seconds)}</span>` : '')}
+        ${netfreeMode && nfStatus[v.id] === 'open' ? NF_DOT_HTML : ''}
+      </div>
+    </div>
     <div class="fp-actions">
-      <button class="fbtn like-btn ${isLiked(v.id) ? 'on' : ''}" data-vid="${id}" onclick="toggleLiked('${id}')">${HEART_ICON_SVG}<span>אהבתי</span></button>
-      <button class="fbtn wl-btn ${isInWatchLater(v.id) ? 'on' : ''}" data-vid="${id}" onclick="toggleWatchLater('${id}')">${FEED_SAVE_SVG}<span>שמור</span></button>
-      <button class="fbtn" onclick="feedShare('${id}')">${FEED_SHARE_SVG}<span>שתף</span></button>
+      <button class="fbtn like-btn ${isLiked(v.id) ? 'on' : ''}" data-vid="${id}" onclick="toggleLiked('${id}')" title="אהבתי" aria-label="אהבתי">${FEED_ICON_HEART}</button>
+      <button class="fbtn wl-btn ${isInWatchLater(v.id) ? 'on' : ''}" data-vid="${id}" onclick="toggleWatchLater('${id}')" title="שמור לצפייה מאוחרת" aria-label="שמור לצפייה מאוחרת">${FEED_ICON_SAVE}</button>
+      <span class="sp"></span>
+      <button class="fbtn" onclick="feedShare('${id}')" title="העתק קישור" aria-label="העתק קישור">${FEED_ICON_SHARE}</button>
     </div>
   </article>`;
 }
 
 function renderFeed(ct, vids) {
-  feedList = vids;
+  feedAll = vids;
+  feedNfLimit = NF_PREFETCH;
+  feedChecking = feedPending();
   ct.insertAdjacentHTML('beforeend', `
     <div class="feed">
-      <div class="feed-head"><h1>פיד</h1><p>${vids.length} סרטונים מהערוצים שאתה עוקב אחריהם</p></div>
+      <div class="feed-head"><h1>פיד</h1><p id="feed-sub"></p></div>
       <div id="feed-list"></div>
       <div id="feed-end" class="feed-end"></div>
     </div>`);
+  feedFill();
+}
+
+// מתעדכן כשתוצאות בדיקת נטפרי מגיעות (בלי לצייר מחדש פוסטים קיימים)
+function feedRefresh(done) {
+  if (section !== 'following' || !document.getElementById('feed-list')) return;
+  feedChecking = done ? false : feedPending();
   feedFill();
 }
 
@@ -2445,20 +2469,41 @@ function feedFill() {
   const list = document.getElementById('feed-list');
   const end = document.getElementById('feed-end');
   if (!list || !end) return;
+  feedList = feedVisibleList();
+  const sub = document.getElementById('feed-sub');
+  if (sub) sub.textContent = netfreeMode
+    ? feedList.length + ' סרטונים פתוחים בנטפרי'
+    : feedList.length + ' סרטונים מהערוצים שאתה עוקב אחריהם';
+
   const upto = Math.min(feedShown, feedList.length);
   if (list.children.length < upto) {
     list.insertAdjacentHTML('beforeend', feedList.slice(list.children.length, upto).map(feedPostHtml).join(''));
     applyNfHideDom();
   }
   if (feedObs) { feedObs.disconnect(); feedObs = null; }
+  const watch = function (fn) {
+    feedObs = new IntersectionObserver(function (es) { if (es[0].isIntersecting) fn(); }, { rootMargin: '900px 0px' });
+    feedObs.observe(end);
+  };
+
   if (upto < feedList.length) {
     end.innerHTML = '<div class="feed-spin"></div>';
-    feedObs = new IntersectionObserver(function (es) {
-      if (es[0].isIntersecting) { feedShown += FEED_STEP; feedFill(); }
-    }, { rootMargin: '900px 0px' });
-    feedObs.observe(end);
+    watch(function () { feedShown += FEED_STEP; feedFill(); });
+  } else if (feedChecking) {
+    end.innerHTML = '<div class="feed-spin"></div>בודק אילו סרטונים פתוחים בנטפרי...';
+  } else if (netfreeMode && feedNfLimit < feedAll.length) {
+    // הגענו לסוף הסרטונים שנבדקו, בודקים עוד כשמגיעים לכאן
+    end.innerHTML = '<div class="feed-spin"></div>';
+    watch(function () {
+      feedNfLimit += 100;
+      feedChecking = true;
+      feedFill();
+      scheduleNetfreeCheck();
+    });
   } else {
-    end.textContent = 'זה הכל, הגעת לסוף הפיד';
+    end.textContent = feedList.length
+      ? 'זה הכל, הגעת לסוף הפיד'
+      : (netfreeMode ? 'אין כרגע סרטונים פתוחים בנטפרי בפיד' : '');
   }
 }
 
