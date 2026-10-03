@@ -52,20 +52,49 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hi
 .logo-img{height:26px;width:auto;display:block;user-select:none;-webkit-user-drag:none;}
 body.dark .logo-img{filter:invert(1) hue-rotate(180deg) saturate(6);}
 @media(max-width:600px){.logo-img{height:22px;}}
-.tb-r{display:flex;align-items:center;gap:8px;margin-inline-start:auto;flex-shrink:0;}
+.tb-r{display:flex;align-items:center;gap:10px;margin-inline-start:auto;flex-shrink:0;}
+
+/* TOPBAR (left side) — unified action pill + user chip */
+.tb-actions{display:flex;align-items:center;gap:2px;height:40px;padding:3px;border:1px solid var(--border);border-radius:999px;background:var(--bg2);}
+.tb-actions .tbtn{width:32px;height:32px;color:var(--txt2);transition:background var(--ease),color var(--ease);}
+.tb-actions .tbtn:hover{background:var(--bg3);color:var(--txt);}
+.tb-actions .tbtn:active{background:var(--bg4);}
+.tb-actions .tbtn:focus-visible,#auth-area .yt-login-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.tb-actions .tbtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
+.tb-actions .ic-sun{display:none;}
+body.dark .tb-actions .ic-sun{display:block;}
+body.dark .tb-actions .ic-moon{display:none;}
+.tb-actions .notif-badge{top:0;right:0;border-color:var(--bg2);font-size:9.5px;}
+
+.tb-r .yt-user-chip{height:40px;padding:3px;padding-inline-end:12px;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:999px;transition:background var(--ease),border-color var(--ease);}
+.tb-r .yt-user-chip:hover{background:var(--bg3);border-color:var(--bg4);}
+.tb-r .yt-user-av{width:32px;height:32px;}
+.tb-r .yt-user-name{font-size:13px;font-weight:500;color:var(--txt);}
+
+#auth-area .yt-login-btn{height:40px;padding:0;padding-inline-start:4px;padding-inline-end:16px;gap:9px;border-radius:999px;background:var(--txt);color:var(--bg);font-size:13px;font-weight:600;}
+#auth-area .yt-login-btn:hover{background:var(--txt2);}
+#auth-area .yt-login-btn .g-dot{width:32px;height:32px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+#auth-area .yt-login-btn .g-dot svg{width:16px;height:16px;}
+
+@media(max-width:640px){
+  .tb-r .yt-user-name{display:none;}
+  .tb-r .yt-user-chip{padding-inline-end:3px;}
+  #auth-area .yt-login-btn{padding-inline-end:4px;}
+  #auth-area .yt-login-btn .lbl{display:none;}
+}
 
 /* SEARCH BAR */
-.search-wrap{display:flex;align-items:center;gap:10px;flex:1;max-width:600px;margin:0 24px;min-width:0;}
-.search-box{display:flex;align-items:center;flex:1;height:40px;border:1px solid var(--border);border-radius:999px;overflow:hidden;background:var(--bg2);min-width:0;transition:border-color var(--ease),background var(--ease),box-shadow var(--ease);}
+.search-wrap{display:flex;align-items:center;flex:1;max-width:560px;margin:0 24px;min-width:0;}
+.search-box{display:flex;align-items:center;gap:2px;flex:1;height:40px;padding:3px;border:1px solid var(--border);border-radius:999px;background:var(--bg2);min-width:0;transition:border-color var(--ease),background var(--ease),box-shadow var(--ease);}
 .search-box:focus-within{background:var(--bg);border-color:var(--bg4);box-shadow:0 0 0 4px var(--tint);}
-.search-input{flex:1;min-width:0;height:100%;background:transparent;color:var(--txt);border:none;padding:0 16px;font-size:14px;font-family:var(--font);outline:none;}
+.search-input{flex:1;min-width:0;height:100%;background:transparent;color:var(--txt);border:none;padding:0 6px;font-size:14px;font-family:var(--font);outline:none;}
 .search-input::placeholder{color:var(--txt3);}
-.search-go{width:52px;height:100%;flex-shrink:0;background:var(--bg3);border:none;border-inline-start:1px solid var(--bg4);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt2);transition:background var(--ease);}
-.search-go:hover{background:var(--bg4);}
-.search-go svg{width:18px;height:18px;fill:currentColor;}
-.mic-btn{width:38px;height:38px;border-radius:50%;background:var(--bg3);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt2);flex-shrink:0;transition:background var(--ease),color var(--ease);}
-.mic-btn:hover{background:var(--bg4);}
-.mic-btn svg{width:17px;height:17px;fill:currentColor;}
+.search-box .search-input:focus-visible{outline:none;}
+.search-go,.mic-btn{width:32px;height:32px;flex-shrink:0;border:none;border-radius:50%;background:transparent;color:var(--txt3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background var(--ease),color var(--ease);}
+.search-go:hover,.mic-btn:hover{background:var(--bg3);color:var(--txt);}
+.search-box:focus-within .search-go{color:var(--txt2);}
+.search-go:focus-visible,.mic-btn:focus-visible{outline:2px solid var(--blue);outline-offset:1px;}
+.search-go svg,.mic-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
 .mic-btn.listening{background:var(--red);color:#fff;animation:micpulse 1.2s infinite;}
 @keyframes micpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,0,0,.4)}50%{box-shadow:0 0 0 6px rgba(255,0,0,0)}}
 @media(max-width:900px){.search-wrap{display:none;}}
@@ -552,22 +581,24 @@ body.dark .logo-img{filter:invert(1) hue-rotate(180deg) saturate(6);}
   </a>
   <div class="search-wrap">
     <div class="search-box">
+      <button class="search-go" onclick="runSearch()" title="חיפוש" aria-label="חיפוש">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
       <input type="text" id="search-input" class="search-input" placeholder="חיפוש" autocomplete="off" onkeydown="if(event.key==='Enter')runSearch()">
-      <button class="search-go" onclick="runSearch()" title="חיפוש">
-        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <button class="mic-btn" id="mic-btn" onclick="toggleVoiceSearch()" title="חיפוש קולי" aria-label="חיפוש קולי">
+        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg>
       </button>
     </div>
-    <button class="mic-btn" id="mic-btn" onclick="toggleVoiceSearch()" title="חיפוש קולי">
-      <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-    </button>
   </div>
   <div class="tb-r">
-    <button class="tbtn" id="theme-toggle" title="ערכת נושא">
-      <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+    <div class="tb-actions">
+    <button class="tbtn" id="theme-toggle" title="ערכת נושא" aria-label="ערכת נושא">
+      <svg class="ic-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
     </button>
     <div class="bell-wrap">
-      <button class="tbtn" id="bell-btn" title="התראות">
-        <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+      <button class="tbtn" id="bell-btn" title="התראות" aria-label="התראות">
+        <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
         <span class="notif-badge" id="notif-badge">0</span>
       </button>
       <div id="notif-panel">
@@ -578,9 +609,10 @@ body.dark .logo-img{filter:invert(1) hue-rotate(180deg) saturate(6);}
         <div id="notif-list"></div>
       </div>
     </div>
-    <button class="tbtn" id="settings-btn" title="הגדרות" onclick="openSettings()">
-      <svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"></path></svg>
+    <button class="tbtn" id="settings-btn" title="הגדרות" aria-label="הגדרות" onclick="openSettings()">
+      <svg viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
     </button>
+    </div>
     <div id="auth-area"></div>
     <div id="user-menu">
       <div class="um-item" onclick="window.open('https://www.youtube.com/feed/subscriptions','_blank')">
@@ -1853,8 +1885,8 @@ function renderAuthArea() {
     if (proItem) proItem.style.display = 'none';
     el.innerHTML = `
       <button class="yt-login-btn" onclick="signIn()">
-        <svg viewBox="0 0 24 24"><path fill="#fff" d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"/></svg>
-        התחבר עם Google
+        <span class="g-dot"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09a6.6 6.6 0 0 1 0-4.18V7.07H2.18a11 11 0 0 0 0 9.86l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></span>
+        <span class="lbl">התחבר עם Google</span>
       </button>`;
     if (signoutItem) signoutItem.style.display = 'none';
     if (refreshItem) refreshItem.style.display = 'none';
