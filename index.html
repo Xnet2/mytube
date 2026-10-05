@@ -406,16 +406,46 @@ body.dark .tb-actions .ic-moon{display:none;}
 .pro-locked{opacity:.45;filter:grayscale(.4);pointer-events:none;}
 
 /* SYSTEM UPDATES (settings) */
-.su-list{display:flex;flex-direction:column;padding:6px 20px 12px;}
-.su-item{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--border);}
-.su-item:first-child{border-top:none;}
-.su-dot{width:9px;height:9px;border-radius:50%;background:var(--red);margin-top:6px;flex-shrink:0;}
-.su-main{min-width:0;flex:1;}
-.su-date{font-size:11.5px;color:var(--txt3);font-weight:500;margin-bottom:2px;}
-.su-title{font-size:14.5px;font-weight:600;line-height:1.5;}
-.su-body{font-size:13px;color:var(--txt2);line-height:1.7;margin-top:3px;white-space:pre-line;}
-.su-empty{padding:18px 0;font-size:13px;color:var(--txt3);}
-.su-empty a{color:var(--blue);cursor:pointer;}
+.su-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:4px 2px 2px;}
+.su-h1{font-size:20px;font-weight:700;letter-spacing:-.2px;}
+.su-sub{font-size:12.5px;color:var(--txt3);margin-top:2px;min-height:1em;}
+.su-head .sp-btn svg{width:16px;height:16px;fill:currentColor;}
+.su-list{display:flex;flex-direction:column;padding-top:8px;}
+.su-item{display:flex;gap:16px;position:relative;}
+.su-rail{width:14px;flex-shrink:0;position:relative;display:flex;justify-content:center;}
+.su-rail::before{content:'';position:absolute;top:0;bottom:0;width:2px;background:var(--border);}
+.su-item:first-child .su-rail::before{top:22px;}
+.su-item:last-child .su-rail::before{bottom:calc(100% - 22px);}
+.su-item:only-child .su-rail::before{display:none;}
+.su-node{position:relative;z-index:1;width:12px;height:12px;border-radius:50%;margin-top:16px;background:var(--bg);border:2px solid var(--bg4);}
+.su-item.latest .su-node{background:var(--red);border-color:var(--red);box-shadow:0 0 0 4px var(--tint);}
+.su-card{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:14px;transition:border-color var(--ease),transform var(--ease);}
+.su-card:hover{border-color:var(--bg4);transform:translateY(-1px);}
+.su-item.latest .su-card{background:var(--spot);}
+.su-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.su-date{font-size:12px;font-weight:500;color:var(--txt3);}
+.su-ver{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--bg3);color:var(--txt2);direction:ltr;}
+.su-badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--bg3);color:var(--txt2);}
+.su-badge.new{background:rgba(34,170,94,.15);color:#1f9d57;}
+.su-badge.imp{background:rgba(62,166,255,.16);color:#2b8be0;}
+.su-badge.fix{background:rgba(245,158,11,.17);color:#c97c05;}
+.su-badge.fresh{background:var(--red);color:#fff;}
+body.dark .su-badge.new{color:#4ade80;}
+body.dark .su-badge.imp{color:#6cb8ff;}
+body.dark .su-badge.fix{color:#fbbf24;}
+.su-title{font-size:16.5px;font-weight:650;line-height:1.5;letter-spacing:-.1px;}
+.su-body{margin-top:6px;font-size:13.5px;line-height:1.8;color:var(--txt2);}
+.su-body p+p,.su-body ul+p,.su-body p+ul{margin-top:6px;}
+.su-body ul{padding-inline-start:20px;}
+.su-body li{margin:2px 0;}
+.su-body li::marker{color:var(--red);}
+.su-body a{color:var(--blue);text-decoration:none;word-break:break-all;}
+.su-body a:hover{text-decoration:underline;}
+.su-empty{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:40px 16px;background:var(--bg2);border:1px dashed var(--bg4);border-radius:16px;color:var(--txt3);font-size:13px;}
+.su-empty b{font-size:15px;color:var(--txt);font-weight:600;}
+.su-empty .sp-btn{margin-top:10px;cursor:pointer;}
+.su-skel{height:92px;border-radius:16px;margin:0 0 14px 30px;background:linear-gradient(90deg,var(--skel1),var(--skel2),var(--skel1));background-size:200% 100%;animation:su-sh 1.3s infinite linear;}
+@keyframes su-sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
 /* SETTINGS PAGE */
 .sp{max-width:980px;margin:0 auto;}
 .sp-head{margin-bottom:22px;}
@@ -3207,8 +3237,15 @@ function renderSettingsPage(ct) {
         '<button class="sp-btn" data-label="אפס" onclick="spReset(this)">אפס</button>')
     );
 
-  const updatesPanel = spCard('עדכוני מערכת',
-    '<div class="su-list" id="su-list"><div class="su-empty">טוען עדכונים...</div></div>');
+  const updatesPanel = `
+    <div class="su-head">
+      <div>
+        <div class="su-h1">מה חדש באתר</div>
+        <div class="su-sub" id="su-count"></div>
+      </div>
+      <button class="sp-btn" onclick="loadSystemUpdates(true)"><svg viewBox="0 0 24 24"><path d="${SP_ICON_REFRESH}"/></svg>רענן</button>
+    </div>
+    <div class="su-list" id="su-list"></div>`;
 
   ct.innerHTML = `
     <div class="sp" id="sp-root">
@@ -3259,48 +3296,130 @@ function parseCsv(text) {
   return rows;
 }
 
+const SU_COLS = {
+  date:    /^(תאריך|יום|date|when)$/i,
+  title:   /^(כותרת|נושא|שם|עדכון|title|subject|name|update)$/i,
+  body:    /^(תיאור|פירוט|תוכן|פרטים|הסבר|הערות|description|details|body|text|notes)$/i,
+  type:    /^(סוג|קטגוריה|תגית|type|category|tag)$/i,
+  version: /^(גרסה|version|ver)$/i
+};
+
+function suParseDate(d) {
+  d = String(d || '').trim();
+  if (!d) return NaN;
+  let m = d.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})(?:\s+(\d{1,2}):(\d{2}))?/);
+  if (m) {
+    const y = m[3].length === 2 ? 2000 + Number(m[3]) : Number(m[3]);
+    return new Date(y, Number(m[2]) - 1, Number(m[1]), Number(m[4] || 0), Number(m[5] || 0)).getTime();
+  }
+  m = d.match(/^(\d{4})[./-](\d{1,2})[./-](\d{1,2})/);
+  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])).getTime();
+  const p = Date.parse(d);
+  return isNaN(p) ? NaN : p;
+}
+
+function suTypeInfo(raw) {
+  const s = String(raw || '').trim();
+  if (!s) return null;
+  if (/חדש|הוספ|תוספת|פיצ'?ר|new|add|feature/i.test(s)) return { label: s, cls: 'new' };
+  if (/תיקון|באג|בעיה|fix|bug/i.test(s)) return { label: s, cls: 'fix' };
+  if (/שיפור|עיצוב|שדרוג|improve|update|design/i.test(s)) return { label: s, cls: 'imp' };
+  return { label: s, cls: 'gen' };
+}
+
 function parseSysUpdates(csv) {
   let rows = parseCsv(csv.replace(/^\uFEFF/, ''));
-  // דילוג על שורת כותרת אם קיימת
-  if (rows.length && rows[0].filter(s => s.trim()).every(s => /^(תאריך|כותרת|נושא|עדכון|תיאור|תוכן|פירוט|פרטים|date|title|description|details|update)$/i.test(s.trim()))) rows = rows.slice(1);
+  if (!rows.length) return [];
+  // זיהוי שורת כותרת לפי שמות עמודות מוכרים
+  let map = null;
+  const first = rows[0].map(s => s.trim());
+  const found = {};
+  first.forEach((h, i) => { for (const k in SU_COLS) if (found[k] == null && SU_COLS[k].test(h)) found[k] = i; });
+  if (Object.keys(found).length >= 1 && first.filter(Boolean).every(h => Object.keys(SU_COLS).some(k => SU_COLS[k].test(h)))) {
+    map = found; rows = rows.slice(1);
+  }
   const items = rows.map((r, i) => {
-    const cells = r.map(s => s.trim());
-    let date = '', title = '', body = '';
-    if (cells.length >= 3) { date = cells[0]; title = cells[1]; body = cells.slice(2).filter(Boolean).join(' · '); }
-    else if (cells.length === 2) {
-      if (!isNaN(Date.parse(cells[0])) || /\d{1,2}[./-]\d{1,2}[./-]\d{2,4}/.test(cells[0])) { date = cells[0]; title = cells[1]; }
-      else { title = cells[0]; body = cells[1]; }
-    } else title = cells[0] || '';
-    return { date, title, body, idx: i };
+    const c = r.map(s => s.trim());
+    let o = { date: '', title: '', body: '', type: '', version: '', idx: i };
+    if (map) {
+      for (const k in map) o[k] = c[map[k]] || '';
+      if (!o.title && !o.body) o.title = c.find(Boolean) || '';
+    } else {
+      const filled = c.filter(Boolean);
+      const dateIdx = c.findIndex(s => s && !isNaN(suParseDate(s)) && /\d/.test(s) && s.length <= 22);
+      if (dateIdx >= 0) {
+        o.date = c[dateIdx];
+        const rest = c.filter((s, j) => j !== dateIdx && s);
+        o.title = rest[0] || ''; o.body = rest.slice(1).join('\n');
+      } else {
+        o.title = filled[0] || ''; o.body = filled.slice(1).join('\n');
+      }
+    }
+    o.ts = suParseDate(o.date);
+    return o;
   }).filter(u => u.title || u.body);
-  const toTs = d => {
-    const m = String(d).match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})$/);
-    if (m) return new Date(m[3].length === 2 ? 2000 + Number(m[3]) : Number(m[3]), Number(m[2]) - 1, Number(m[1])).getTime();
-    const p = Date.parse(d); return isNaN(p) ? NaN : p;
-  };
-  const allDated = items.length && items.every(u => !isNaN(toTs(u.date)));
-  items.sort((a, b) => allDated ? (toTs(b.date) - toTs(a.date)) || (b.idx - a.idx) : b.idx - a.idx);
+  const allDated = items.length && items.every(u => !isNaN(u.ts));
+  items.sort((a, b) => allDated ? (b.ts - a.ts) || (b.idx - a.idx) : b.idx - a.idx);
   return items;
+}
+
+function suFormatDate(u) {
+  if (isNaN(u.ts)) return u.date;
+  const d = new Date(u.ts);
+  return d.toLocaleDateString('he-IL', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function suRichText(s) {
+  const lines = String(s || '').split(/\n+/).map(l => l.trim()).filter(Boolean);
+  if (!lines.length) return '';
+  const link = t => x(t).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  let out = '', list = [];
+  const flush = () => { if (list.length) { out += '<ul>' + list.map(li => '<li>' + li + '</li>').join('') + '</ul>'; list = []; } };
+  lines.forEach(l => {
+    const m = l.match(/^[-•*·▪]\s*(.+)$/);
+    if (m) list.push(link(m[1]));
+    else { flush(); out += '<p>' + link(l) + '</p>'; }
+  });
+  flush();
+  return out;
 }
 
 function renderSysUpdates() {
   const el = document.getElementById('su-list');
   if (!el) return;
+  const cnt = document.getElementById('su-count');
+  if (cnt) cnt.textContent = sysUpdates ? sysUpdates.length + ' עדכונים' : '';
   if (sysUpdatesError && !sysUpdates) {
-    el.innerHTML = '<div class="su-empty">לא ניתן לטעון את העדכונים כרגע. <a onclick="loadSystemUpdates(true)">נסה שוב</a></div>';
+    el.innerHTML = '<div class="su-empty"><b>לא ניתן לטעון את העדכונים כרגע</b><span>בדוק את החיבור ונסה שוב.</span><a class="sp-btn" onclick="loadSystemUpdates(true)">נסה שוב</a></div>';
     return;
   }
-  if (!sysUpdates) { el.innerHTML = '<div class="su-empty">טוען עדכונים...</div>'; return; }
-  if (!sysUpdates.length) { el.innerHTML = '<div class="su-empty">אין עדכוני מערכת כרגע.</div>'; return; }
-  el.innerHTML = sysUpdates.map(u => `
-    <div class="su-item">
-      <div class="su-dot"></div>
-      <div class="su-main">
-        ${u.date ? `<div class="su-date">${x(u.date)}</div>` : ''}
-        ${u.title ? `<div class="su-title">${x(u.title)}</div>` : ''}
-        ${u.body ? `<div class="su-body">${x(u.body)}</div>` : ''}
+  if (!sysUpdates) {
+    el.innerHTML = '<div class="su-skel"></div><div class="su-skel"></div><div class="su-skel"></div>';
+    return;
+  }
+  if (!sysUpdates.length) {
+    el.innerHTML = '<div class="su-empty"><b>אין עדכונים להצגה</b><span>כשיתווספו שינויים באתר הם יופיעו כאן.</span></div>';
+    return;
+  }
+  const week = 7 * 24 * 3600 * 1000;
+  el.innerHTML = sysUpdates.map((u, i) => {
+    const t = suTypeInfo(u.type);
+    const isNew = !isNaN(u.ts) && (Date.now() - u.ts) < week && (Date.now() - u.ts) > -week;
+    return `
+    <article class="su-item${i === 0 ? ' latest' : ''}">
+      <div class="su-rail"><span class="su-node"></span></div>
+      <div class="su-card">
+        <div class="su-meta">
+          ${u.date ? `<span class="su-date">${x(suFormatDate(u))}</span>` : ''}
+          ${u.version ? `<span class="su-ver">v${x(String(u.version).replace(/^v/i, ''))}</span>` : ''}
+          ${t ? `<span class="su-badge ${t.cls}">${x(t.label)}</span>` : ''}
+          ${isNew ? '<span class="su-badge fresh">חדש</span>' : ''}
+        </div>
+        ${u.title ? `<h3 class="su-title">${x(u.title)}</h3>` : ''}
+        ${u.body ? `<div class="su-body">${suRichText(u.body)}</div>` : ''}
       </div>
-    </div>`).join('');
+    </article>`;
+  }).join('');
 }
 
 async function loadSystemUpdates(force) {
