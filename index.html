@@ -405,6 +405,17 @@ body.dark .tb-actions .ic-moon{display:none;}
 .accent-sw.on::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.4);}
 .pro-locked{opacity:.45;filter:grayscale(.4);pointer-events:none;}
 
+/* SYSTEM UPDATES (settings) */
+.su-list{display:flex;flex-direction:column;padding:6px 20px 12px;}
+.su-item{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--border);}
+.su-item:first-child{border-top:none;}
+.su-dot{width:9px;height:9px;border-radius:50%;background:var(--red);margin-top:6px;flex-shrink:0;}
+.su-main{min-width:0;flex:1;}
+.su-date{font-size:11.5px;color:var(--txt3);font-weight:500;margin-bottom:2px;}
+.su-title{font-size:14.5px;font-weight:600;line-height:1.5;}
+.su-body{font-size:13px;color:var(--txt2);line-height:1.7;margin-top:3px;white-space:pre-line;}
+.su-empty{padding:18px 0;font-size:13px;color:var(--txt3);}
+.su-empty a{color:var(--blue);cursor:pointer;}
 /* SETTINGS PAGE */
 .sp{max-width:980px;margin:0 auto;}
 .sp-head{margin-bottom:22px;}
@@ -797,6 +808,7 @@ const WORKER_BATCH = 30;     // ערוצים לבקשה (חייב להיות <= 
 const WORKER_PARALLEL = 3;   // כמה אצוות במקביל
 
 const SEEN_KEY  = 'mytube_seen';        // {channelId: isoTimestamp}
+const SEEN_VIDEOS_KEY = 'mytube_seen_videos'; // {videoId: 1} סרטונים שנצפו - לא יופיעו שוב בפעמון
 const CHANNELS_CACHE_KEY = 'mytube_channels_cache';
 const VIDEOS_CACHE_KEY = 'mytube_videos_cache';
 const ME_CACHE_KEY = 'mytube_me_cache';
@@ -991,6 +1003,8 @@ window.addEventListener('popstate', () => {
 });
 
 let seenMap = {};
+let seenVideos = {};
+try { seenVideos = JSON.parse(localStorage.getItem(SEEN_VIDEOS_KEY) || '{}') || {}; } catch(e){ seenVideos = {}; }
 
 function loadLocalLists() {
   try { watchHistory = JSON.parse(localStorage.getItem(WATCH_HISTORY_KEY) || '[]'); } catch(e){ watchHistory = []; }
@@ -1690,7 +1704,7 @@ function exportBackup() {
   if (!isPro()) { toast('גיבוי וייצוא נתונים זמינים למנויי PRO'); return; }
   const payload = {
     exportedAt: new Date().toISOString(),
-    watchHistory, watchLater, likedVideos, seenMap,
+    watchHistory, watchLater, likedVideos, seenMap, seenVideos,
     settings: {
       theme: localStorage.getItem(THEME_KEY),
       sidebarCol: localStorage.getItem(SIDEBAR_KEY),
@@ -1719,6 +1733,7 @@ function importBackupFile(input) {
       if (Array.isArray(data.watchLater)) { watchLater = data.watchLater; localStorage.setItem(WATCH_LATER_KEY, JSON.stringify(watchLater)); }
       if (Array.isArray(data.likedVideos)) { likedVideos = data.likedVideos; localStorage.setItem(LIKED_KEY, JSON.stringify(likedVideos)); }
       if (data.seenMap) { seenMap = data.seenMap; localStorage.setItem(SEEN_KEY, JSON.stringify(seenMap)); }
+      if (data.seenVideos) { seenVideos = data.seenVideos; localStorage.setItem(SEEN_VIDEOS_KEY, JSON.stringify(seenVideos)); }
       if (data.settings) {
         const s = data.settings;
         if (s.theme) localStorage.setItem(THEME_KEY, s.theme);
@@ -1956,12 +1971,8 @@ function filterByChannel(channelId) {
 }
 
 function channelHasNew(channelId) {
-  const seenAt = seenMap[channelId];
   const pool = nfVisible(allVideos);
-  if (!seenAt) {
-    return pool.some(v => v.channelId === channelId);
-  }
-  return pool.some(v => v.channelId === channelId && new Date(v.publishedAt) > new Date(seenAt));
+  return pool.some(v => v.channelId === channelId && isVideoNew(v));
 }
 
 /* ============ SECTIONS ============ */
@@ -2556,6 +2567,7 @@ function feedShare(id) {
 }
 
 function isVideoNew(v) {
+  if (seenVideos[v.id]) return false;
   const seenAt = seenMap[v.channelId];
   if (!seenAt) return true;
   return new Date(v.publishedAt) > new Date(seenAt);
@@ -2667,7 +2679,20 @@ function recordWatch(v) {
   watchHistory.unshift(copy);
   watchHistory = watchHistory.slice(0, 200);
   localStorage.setItem(WATCH_HISTORY_KEY, JSON.stringify(watchHistory));
+  markVideoSeen(v.id);
   if (section === 'watched') renderContent();
+}
+
+// סרטון שנצפה מפסיק להיחשב "חדש" - ההתראה בפעמון והנקודה בערוץ נעלמות
+function markVideoSeen(id) {
+  if (!id || seenVideos[id]) return;
+  seenVideos[id] = 1;
+  const keys = Object.keys(seenVideos);
+  if (keys.length > 1000) keys.slice(0, keys.length - 1000).forEach(k => { delete seenVideos[k]; });
+  try { localStorage.setItem(SEEN_VIDEOS_KEY, JSON.stringify(seenVideos)); } catch (e) {}
+  updateNotifBadge();
+  renderNotifPanel();
+  renderChannels();
 }
 
 function clearWatchHistory() {
@@ -2958,7 +2983,9 @@ function toggleSettings(force) {
 
 function clearSeenMarks() {
   seenMap = {};
+  seenVideos = {};
   localStorage.removeItem(SEEN_KEY);
+  localStorage.removeItem(SEEN_VIDEOS_KEY);
   updateNotifBadge();
   renderChannels();
   renderContent();
@@ -3051,6 +3078,7 @@ const SP_TABS = [
   { id: 'pro', label: 'PRO', icon: 'M5 16L3 6l5.5 4L12 4l3.5 6L21 6l-2 10H5zm14 3H5v2h14v-2z' },
   { id: 'display', label: 'תצוגה', icon: 'M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z' },
   { id: 'netfree', label: 'נטפרי', icon: 'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z' },
+  { id: 'updates', label: 'עדכוני מערכת', icon: 'M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z' },
   { id: 'data', label: 'נתונים', icon: 'M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z' }
 ];
 
@@ -3179,6 +3207,9 @@ function renderSettingsPage(ct) {
         '<button class="sp-btn" data-label="אפס" onclick="spReset(this)">אפס</button>')
     );
 
+  const updatesPanel = spCard('עדכוני מערכת',
+    '<div class="su-list" id="su-list"><div class="su-empty">טוען עדכונים...</div></div>');
+
   ct.innerHTML = `
     <div class="sp" id="sp-root">
       <div class="sp-head">
@@ -3191,12 +3222,101 @@ function renderSettingsPage(ct) {
           <div class="sp-panel" data-panel="pro">${pro}</div>
           <div class="sp-panel" data-panel="display">${display}</div>
           <div class="sp-panel" data-panel="netfree">${netfree}</div>
+          <div class="sp-panel" data-panel="updates">${updatesPanel}</div>
           <div class="sp-panel" data-panel="data">${data}</div>
         </div>
       </div>
     </div>`;
   setSettingsTab(settingsTab);
   updateSettingsLive();
+  loadSystemUpdates();
+}
+
+/* ---- עדכוני מערכת: נשאבים מגיליון Google שמתפרסם לאינטרנט ---- */
+const SYS_UPDATES_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTzeSiC1sSRyRgLoVcFI87Uypz5Neuc8yFibloJrdXHXi7CBc7STgP-udSp5-Z6ysBz0STSAF5KfaHU/pub?output=csv';
+let sysUpdates = null;      // null = עדיין לא נטען
+let sysUpdatesLoading = false;
+let sysUpdatesError = false;
+
+function parseCsv(text) {
+  const rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; }
+      else cell += c;
+    } else if (c === '"') q = true;
+    else if (c === ',') { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      row.push(cell); cell = '';
+      if (row.some(s => s.trim() !== '')) rows.push(row);
+      row = [];
+    } else cell += c;
+  }
+  row.push(cell);
+  if (row.some(s => s.trim() !== '')) rows.push(row);
+  return rows;
+}
+
+function parseSysUpdates(csv) {
+  let rows = parseCsv(csv.replace(/^\uFEFF/, ''));
+  // דילוג על שורת כותרת אם קיימת
+  if (rows.length && rows[0].filter(s => s.trim()).every(s => /^(תאריך|כותרת|נושא|עדכון|תיאור|תוכן|פירוט|פרטים|date|title|description|details|update)$/i.test(s.trim()))) rows = rows.slice(1);
+  const items = rows.map((r, i) => {
+    const cells = r.map(s => s.trim());
+    let date = '', title = '', body = '';
+    if (cells.length >= 3) { date = cells[0]; title = cells[1]; body = cells.slice(2).filter(Boolean).join(' · '); }
+    else if (cells.length === 2) {
+      if (!isNaN(Date.parse(cells[0])) || /\d{1,2}[./-]\d{1,2}[./-]\d{2,4}/.test(cells[0])) { date = cells[0]; title = cells[1]; }
+      else { title = cells[0]; body = cells[1]; }
+    } else title = cells[0] || '';
+    return { date, title, body, idx: i };
+  }).filter(u => u.title || u.body);
+  const toTs = d => {
+    const m = String(d).match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})$/);
+    if (m) return new Date(m[3].length === 2 ? 2000 + Number(m[3]) : Number(m[3]), Number(m[2]) - 1, Number(m[1])).getTime();
+    const p = Date.parse(d); return isNaN(p) ? NaN : p;
+  };
+  const allDated = items.length && items.every(u => !isNaN(toTs(u.date)));
+  items.sort((a, b) => allDated ? (toTs(b.date) - toTs(a.date)) || (b.idx - a.idx) : b.idx - a.idx);
+  return items;
+}
+
+function renderSysUpdates() {
+  const el = document.getElementById('su-list');
+  if (!el) return;
+  if (sysUpdatesError && !sysUpdates) {
+    el.innerHTML = '<div class="su-empty">לא ניתן לטעון את העדכונים כרגע. <a onclick="loadSystemUpdates(true)">נסה שוב</a></div>';
+    return;
+  }
+  if (!sysUpdates) { el.innerHTML = '<div class="su-empty">טוען עדכונים...</div>'; return; }
+  if (!sysUpdates.length) { el.innerHTML = '<div class="su-empty">אין עדכוני מערכת כרגע.</div>'; return; }
+  el.innerHTML = sysUpdates.map(u => `
+    <div class="su-item">
+      <div class="su-dot"></div>
+      <div class="su-main">
+        ${u.date ? `<div class="su-date">${x(u.date)}</div>` : ''}
+        ${u.title ? `<div class="su-title">${x(u.title)}</div>` : ''}
+        ${u.body ? `<div class="su-body">${x(u.body)}</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+async function loadSystemUpdates(force) {
+  if (sysUpdatesLoading) return;
+  if (sysUpdates && !force) { renderSysUpdates(); return; }
+  sysUpdatesLoading = true; sysUpdatesError = false;
+  renderSysUpdates();
+  try {
+    const r = await fetch(SYS_UPDATES_URL + '&t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    sysUpdates = parseSysUpdates(await r.text());
+  } catch (e) {
+    sysUpdatesError = true;
+  }
+  sysUpdatesLoading = false;
+  renderSysUpdates();
 }
 
 function setSettingsTab(id) {
