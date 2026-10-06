@@ -3122,8 +3122,8 @@ function rlOnState(e) {
     case 1:
       rlClearTimers();
       rlErrRun = 0;
-      stage.classList.remove('loading', 'paused');
-      rlEl('rl-poster').classList.add('hide');
+      stage.classList.remove('paused');
+      rlRevealIfPlaying();
       break;
     case 2:
       stage.classList.remove('loading');
@@ -3149,6 +3149,26 @@ function rlOnError() {
   if (rlErrRun < rlList.length) rlT(setTimeout(() => { if (rlAlive()) rlGo(1, true); }, 700));
 }
 
+// מסיר את תמונת התצוגה המקדימה ברגע שהסרטון הנוכחי באמת מתנגן.
+// נבדק גם בסקר קבוע ולא רק באירועי הנגן, כי יוטיוב לא תמיד שולח אירוע אחרי החלפת סרטון.
+function rlRevealIfPlaying() {
+  if (!rlPlayer || !rlReady) return false;
+  const stage = rlEl('rl-stage'), poster = rlEl('rl-poster');
+  if (!stage || !poster) return false;
+  try {
+    const cur = rlList[rlIdx];
+    let vid = '';
+    try { vid = (rlPlayer.getVideoData() || {}).video_id || ''; } catch (e) {}
+    if (rlPlayer.getPlayerState() === 1 && cur && (!vid || vid === cur.id) && rlPlayer.getCurrentTime() > 0.05) {
+      stage.classList.remove('loading', 'paused');
+      poster.classList.add('hide');
+      rlClearTimers();
+      return true;
+    }
+  } catch (e) {}
+  return false;
+}
+
 function rlGo(d, force) {
   if (!rlAlive()) return false;
   const now = Date.now();
@@ -3172,6 +3192,7 @@ function rlToggle() {
 function rlUpdateProgress() {
   if (!rlAlive()) { clearInterval(rlTick); rlTick = null; return; }
   if (!rlReady || !rlPlayer) return;
+  rlRevealIfPlaying();
   try {
     const d = rlPlayer.getDuration(), t = rlPlayer.getCurrentTime();
     if (d > 0) {
