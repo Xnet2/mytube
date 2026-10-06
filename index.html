@@ -633,13 +633,13 @@ body.dark .rl-amb{opacity:.4;}
 .rl-ytwrap,.rl-ytwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 .rl-ytwrap iframe{pointer-events:none;}
 .rl-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;transition:opacity .35s ease;pointer-events:none;}
-.rl-poster.hide{opacity:0;}
+.rl-poster.hide{opacity:0!important;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s;}
 .rl-tap{position:absolute;inset:0;z-index:4;cursor:pointer;touch-action:pan-y;}
 .rl-shade-t,.rl-shade-b{position:absolute;left:0;right:0;z-index:5;pointer-events:none;}
 .rl-shade-t{top:0;height:130px;background:linear-gradient(180deg,rgba(0,0,0,.6),transparent);}
 .rl-shade-b{bottom:0;height:260px;background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.3) 60%,transparent);}
 .rl-meta{position:absolute;z-index:6;left:0;right:0;pointer-events:none;}
-.rl-meta.top{top:0;padding:16px 64px 0 16px;display:flex;align-items:center;gap:10px;direction:rtl;}
+.rl-meta.top{top:0;padding:16px 16px 0 100px;display:flex;align-items:center;gap:10px;direction:rtl;}
 .rl-av{width:36px;height:36px;border-radius:50%;background:#2a2a2e;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;box-shadow:0 0 0 2px rgba(255,255,255,.85);overflow:hidden;}
 .rl-av img{width:100%;height:100%;object-fit:cover;}
 .rl-chname{font-size:13.5px;font-weight:700;text-shadow:0 1px 8px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -656,8 +656,8 @@ body.dark .rl-amb{opacity:.4;}
 .rl-pause{position:absolute;z-index:6;top:50%;left:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.75);transition:opacity .2s,transform .25s cubic-bezier(.2,1.4,.4,1);pointer-events:none;}
 .rl-pause svg{width:38px;height:38px;fill:#fff;margin-inline-start:4px;}
 .rl-stage.paused .rl-pause{opacity:1;transform:scale(1);}
-.rl-stage.go-next .rl-meta,.rl-stage.go-next .rl-poster{animation:rlnext .4s cubic-bezier(.2,.8,.2,1) both;}
-.rl-stage.go-prev .rl-meta,.rl-stage.go-prev .rl-poster{animation:rlprev .4s cubic-bezier(.2,.8,.2,1) both;}
+.rl-stage.go-next .rl-meta{animation:rlnext .4s cubic-bezier(.2,.8,.2,1) backwards;}
+.rl-stage.go-prev .rl-meta{animation:rlprev .4s cubic-bezier(.2,.8,.2,1) backwards;}
 @keyframes rlnext{from{opacity:0;transform:translateX(-44px)}to{opacity:1;transform:none}}
 @keyframes rlprev{from{opacity:0;transform:translateX(44px)}to{opacity:1;transform:none}}
 .rl-ctl{position:absolute;z-index:8;top:14px;left:14px;display:flex;gap:8px;}
@@ -3046,7 +3046,7 @@ function rlRender(dir) {
   rlEl('rl-time').textContent = '0:00 / 0:00';
   stage.classList.remove('paused', 'go-next', 'go-prev');
   stage.classList.add('loading');
-  if (dir) { void stage.offsetWidth; stage.classList.add(dir > 0 ? 'go-next' : 'go-prev'); }
+  if (dir) { void stage.offsetWidth; stage.classList.add(dir > 0 ? 'go-next' : 'go-prev'); setTimeout(() => stage.classList.remove('go-next', 'go-prev'), 500); }
   rlUpdateNav();
   try { recordWatch(v); } catch (e) {}
 }
