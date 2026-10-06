@@ -2886,7 +2886,7 @@ function toggleNotifPanel(force) {
 const RL_VIEW_KEY = 'mytube_shorts_view';
 const RL_AUTO_KEY = 'mytube_sm_auto';
 const RL_MUTE_KEY = 'mytube_sm_mute';
-let rlList = [], rlIdx = 0, rlPlayer = null, rlReady = false, rlLoadedId = '';
+let rlList = [], rlIdx = 0, rlPlayer = null, rlReady = false, rlLoadedId = '', rlGen = 0;
 let rlTick = null, rlTimers = [], rlForce = false, rlGoAt = 0, rlWheelAt = 0, rlErrRun = 0, rlPtr = null, rlSwipeAt = 0;
 let rlAuto = localStorage.getItem(RL_AUTO_KEY) !== '0';
 let rlMuted = localStorage.getItem(RL_MUTE_KEY) === '1';
@@ -3057,6 +3057,9 @@ function rlStartPlayback() {
   const v = rlList[rlIdx];
   const wrap = rlEl('rl-ytwrap');
   if (!v || !wrap) return;
+  const gen = ++rlGen;
+  try { if (rlPlayer && rlPlayer.destroy) rlPlayer.destroy(); } catch (e) {}
+  rlPlayer = null; rlReady = false;
   wrap.innerHTML = '';
   const ifr = document.createElement('iframe');
   ifr.id = 'rl-yt';
@@ -3074,7 +3077,12 @@ function rlStartPlayback() {
       if (++tries > 80) { toast('לא ניתן לטעון את נגן יוטיוב'); return; }
       rlT(setTimeout(bind, 150)); return;
     }
-    rlPlayer = new YT.Player(ifr, { events: { onReady: rlOnReady, onStateChange: rlOnState, onError: rlOnError } });
+    if (gen !== rlGen) return;
+    rlPlayer = new YT.Player(ifr, { events: {
+      onReady: () => { if (gen === rlGen) rlOnReady(); },
+      onStateChange: ev => { if (gen === rlGen) rlOnState(ev); },
+      onError: ev => { if (gen === rlGen) rlOnError(ev); }
+    } });
   };
   bind();
   rlWatchdog();
@@ -3082,20 +3090,9 @@ function rlStartPlayback() {
 function rlOnReady() {
   rlReady = true;
   try { if (rlMuted) rlPlayer.mute(); else rlPlayer.unMute(); } catch (e) {}
-  const v = rlList[rlIdx];
-  if (v && v.id !== rlLoadedId) rlLoad();
 }
-function rlLoad() {
-  if (!rlReady || !rlPlayer) return;
-  const v = rlList[rlIdx];
-  if (!v) return;
-  rlLoadedId = v.id;
-  try {
-    if (rlMuted) rlPlayer.mute(); else rlPlayer.unMute();
-    rlPlayer.loadVideoById(v.id);
-  } catch (e) {}
-  rlWatchdog();
-}
+// כל שורטס מקבל iframe ונגן חדשים (כמו השורטס הראשון), במקום loadVideoById על נגן קיים
+function rlLoad() { rlStartPlayback(); }
 // אם הדפדפן חוסם התחלה אוטומטית: מנסים שוב, אחר כך בלי קול, ובסוף מציגים כפתור הפעלה
 function rlWatchdog() {
   rlClearTimers();
