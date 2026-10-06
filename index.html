@@ -609,6 +609,91 @@ body.dark .su-badge.fix{color:#fbbf24;}
   .vtitle{font-size:13px;}
   .vav{width:30px;height:30px;}
 }
+
+/* ============ SHORTS MODE (PRO) ============ */
+.sm-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:4px 0 18px;flex-wrap:wrap;}
+.sm-head .ch-name{font-size:22px;font-weight:700;}
+.sm-head .ch-sub{font-size:13px;color:var(--txt3);margin-top:2px;}
+.sm-launch{position:relative;display:inline-flex;align-items:center;gap:10px;font-family:var(--font);font-size:14px;font-weight:700;color:#fff;border:0;cursor:pointer;border-radius:999px;padding:10px 20px 10px 14px;background:linear-gradient(120deg,#ff2d2d 0%,#ff0055 55%,#ff6a00 100%);box-shadow:0 8px 24px -8px rgba(255,0,60,.65),inset 0 0 0 1px rgba(255,255,255,.22);transition:transform .18s,box-shadow .18s,filter .18s;}
+.sm-launch:hover{transform:translateY(-1px) scale(1.02);box-shadow:0 12px 30px -8px rgba(255,0,60,.8),inset 0 0 0 1px rgba(255,255,255,.3);}
+.sm-launch:active{transform:scale(.98);}
+.sm-launch .sm-ico{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;}
+.sm-launch .sm-ico svg{width:18px;height:18px;fill:#fff;}
+.sm-launch.locked{background:var(--bg3);color:var(--txt);box-shadow:inset 0 0 0 1px var(--border);}
+.sm-launch.locked .sm-ico{background:var(--bg4);}
+.sm-launch.locked .sm-ico svg{fill:var(--txt2);}
+.sm-chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-size:12px;font-weight:700;border:0;cursor:pointer;border-radius:999px;padding:5px 12px 5px 8px;color:#fff;background:linear-gradient(120deg,#ff2d2d,#ff0055);transition:transform .15s,filter .15s;}
+.sm-chip:hover{transform:scale(1.04);}
+.sm-chip svg{width:14px;height:14px;fill:#fff;}
+.sm-chip.locked{background:var(--bg3);color:var(--txt2);}
+.sm-chip.locked svg{fill:var(--txt2);}
+
+#sm{position:fixed;inset:0;z-index:700;display:none;align-items:center;justify-content:center;background:#050506;color:#fff;font-family:var(--font);direction:rtl;overflow:hidden;-webkit-user-select:none;user-select:none;}
+#sm.open{display:flex;animation:smfade .28s ease both;}
+@keyframes smfade{from{opacity:0}to{opacity:1}}
+body.sm-open{overflow:hidden;}
+body.sm-open #toast{z-index:900;}
+.sm-ambient{position:absolute;inset:-12%;width:124%;height:124%;object-fit:cover;filter:blur(70px) saturate(1.6) brightness(.7);opacity:.7;transition:opacity .5s;pointer-events:none;}
+.sm-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(5,5,6,0) 25%,rgba(5,5,6,.78) 100%);}
+.sm-wrap{position:relative;z-index:2;display:flex;align-items:center;gap:22px;}
+.sm-stage{position:relative;height:min(calc(100vh - 56px),900px);height:min(calc(100dvh - 56px),900px);aspect-ratio:9/16;max-width:calc(100vw - 132px);border-radius:30px;overflow:hidden;background:#000;box-shadow:0 50px 140px -20px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.1),0 0 80px -10px rgba(255,0,60,.22);}
+#sm-yt,.sm-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;}
+.sm-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;transition:opacity .35s ease;pointer-events:none;}
+.sm-poster.hide{opacity:0;}
+.sm-tap{position:absolute;inset:0;z-index:4;cursor:pointer;touch-action:none;}
+.sm-shade-t,.sm-shade-b{position:absolute;left:0;right:0;z-index:5;pointer-events:none;}
+.sm-shade-t{top:0;height:150px;background:linear-gradient(180deg,rgba(0,0,0,.62),transparent);}
+.sm-shade-b{bottom:0;height:300px;background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.35) 55%,transparent);}
+.sm-meta{position:absolute;z-index:6;right:0;left:0;pointer-events:none;}
+.sm-meta.top{top:0;padding:20px 20px 0;display:flex;align-items:center;gap:11px;}
+.sm-av{width:40px;height:40px;border-radius:50%;background:#2a2a2e;object-fit:cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;box-shadow:0 0 0 2px rgba(255,255,255,.85);overflow:hidden;}
+.sm-av img{width:100%;height:100%;object-fit:cover;}
+.sm-chname{font-size:14.5px;font-weight:700;text-shadow:0 1px 8px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sm-when{font-size:11.5px;color:rgba(255,255,255,.72);margin-top:1px;}
+.sm-meta.bot{bottom:34px;padding:0 22px;}
+.sm-title{font-size:16.5px;font-weight:600;line-height:1.45;text-shadow:0 1px 10px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.sm-time{margin-top:10px;font-size:11.5px;color:rgba(255,255,255,.7);font-variant-numeric:tabular-nums;direction:ltr;text-align:right;}
+.sm-bar{position:absolute;z-index:7;left:0;right:0;bottom:0;height:22px;display:flex;align-items:flex-end;cursor:pointer;direction:ltr;}
+.sm-bar-track{width:100%;height:4px;background:rgba(255,255,255,.22);transition:height .15s;}
+.sm-bar:hover .sm-bar-track{height:8px;}
+.sm-bar-fill{height:100%;width:0;background:linear-gradient(90deg,#ff2d2d,#ff0055,#ff6a00);box-shadow:0 0 14px rgba(255,0,60,.8);}
+.sm-spin{position:absolute;z-index:6;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;animation:feedspin .8s linear infinite;opacity:0;transition:opacity .2s;pointer-events:none;}
+.sm-stage.loading .sm-spin{opacity:1;}
+.sm-pause{position:absolute;z-index:6;top:50%;left:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.7);transition:opacity .2s,transform .25s cubic-bezier(.2,1.4,.4,1);pointer-events:none;}
+.sm-pause svg{width:42px;height:42px;fill:#fff;margin-inline-start:4px;}
+.sm-stage.paused .sm-pause{opacity:1;transform:scale(1);}
+.sm-stage.go-next .sm-meta,.sm-stage.go-next .sm-poster{animation:smnext .42s cubic-bezier(.2,.8,.2,1) both;}
+.sm-stage.go-prev .sm-meta,.sm-stage.go-prev .sm-poster{animation:smprev .42s cubic-bezier(.2,.8,.2,1) both;}
+@keyframes smnext{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
+@keyframes smprev{from{opacity:0;transform:translateY(-46px)}to{opacity:1;transform:none}}
+.sm-rail{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.sm-btn{width:52px;height:52px;border-radius:50%;border:0;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 10px 28px -10px rgba(0,0,0,.7);transition:background .18s,transform .15s,opacity .18s,box-shadow .18s;}
+.sm-btn:hover{background:rgba(255,255,255,.2);transform:scale(1.07);}
+.sm-btn:active{transform:scale(.94);}
+.sm-btn svg{width:26px;height:26px;fill:currentColor;}
+.sm-btn[disabled]{opacity:.28;pointer-events:none;}
+.sm-btn.on{background:linear-gradient(135deg,#ff2d2d,#ff0055);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),0 10px 28px -8px rgba(255,0,60,.7);}
+.sm-rail .sep{width:26px;height:1px;background:rgba(255,255,255,.18);}
+.sm-top-ui{position:absolute;z-index:8;top:18px;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 20px;pointer-events:none;}
+.sm-top-ui>*{pointer-events:auto;}
+.sm-close{width:46px;height:46px;}
+.sm-close svg{width:24px;height:24px;}
+.sm-count{display:flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;background:rgba(255,255,255,.1);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);font-variant-numeric:tabular-nums;direction:ltr;}
+.sm-count .pro-tag{font-size:10px;}
+.sm-hint{position:absolute;z-index:8;bottom:16px;left:50%;transform:translateX(-50%);font-size:12px;color:rgba(255,255,255,.62);background:rgba(0,0,0,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:7px 16px;border-radius:999px;white-space:nowrap;transition:opacity .6s;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);}
+.sm-hint.gone{opacity:0;}
+.sm-hint kbd{font-family:var(--font);font-weight:700;color:#fff;background:rgba(255,255,255,.14);border-radius:5px;padding:1px 6px;margin:0 2px;}
+@media(max-width:700px){
+  .sm-wrap{gap:0;}
+  .sm-stage{height:100vh;height:100dvh;width:100vw;max-width:none;aspect-ratio:auto;border-radius:0;box-shadow:none;}
+  .sm-rail{position:absolute;z-index:9;inset-inline-start:12px;bottom:128px;gap:12px;}
+  .sm-rail .sm-btn{width:46px;height:46px;background:rgba(0,0,0,.38);}
+  .sm-rail .sm-btn svg{width:23px;height:23px;}
+  .sm-meta.bot{padding-inline-end:74px;bottom:36px;}
+  .sm-hint{display:none;}
+  .sm-top-ui{top:max(14px,env(safe-area-inset-top));}
+}
+@media(prefers-reduced-motion:reduce){.sm-stage.go-next .sm-meta,.sm-stage.go-prev .sm-meta,.sm-stage.go-next .sm-poster,.sm-stage.go-prev .sm-poster{animation:none;}}
 </style>
 </head>
 <body class="light">
@@ -769,6 +854,7 @@ body.dark .su-badge.fix{color:#fbbf24;}
           <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> מכסות אחסון מוגדלות (מטמון, "אהבתי", לצפייה מאוחרת)</li>
           <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> ערוצים נוספים בתפריט הצד</li>
           <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> בקרת מהירות ניגון וקיצורי מקלדת בנגן</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> מצב שורטס: מעבר בחצים בין שורטס עם ניגון אוטומטי</li>
           <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> צבעי הדגשה נוספים לעיצוב האתר</li>
           <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> כל שירותי סינון נטפרי (בדיקה, סימון והסתרת סרטונים חסומים)</li>
           <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> גיבוי וייצוא/ייבוא של כל הנתונים שלך</li>
@@ -793,6 +879,37 @@ body.dark .su-badge.fix{color:#fbbf24;}
       </div>
     </div>
   </div>
+</div>
+
+<div id="sm" role="dialog" aria-modal="true" aria-label="מצב שורטס">
+  <img class="sm-ambient" id="sm-ambient" alt="">
+  <div class="sm-vignette"></div>
+  <div class="sm-top-ui">
+    <button class="sm-btn sm-close" onclick="closeShortsMode()" aria-label="סגירה" title="סגירה (Esc)"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    <div class="sm-count"><span id="sm-count">1 / 1</span><span class="pro-tag">PRO</span></div>
+    <span style="width:46px"></span>
+  </div>
+  <div class="sm-wrap">
+    <div class="sm-stage loading" id="sm-stage">
+      <img class="sm-poster" id="sm-poster" alt="">
+      <div id="sm-yt"></div>
+      <div class="sm-shade-t"></div><div class="sm-shade-b"></div>
+      <div class="sm-meta top"><div class="sm-av" id="sm-av"></div><div style="min-width:0"><div class="sm-chname" id="sm-chname"></div><div class="sm-when" id="sm-when"></div></div></div>
+      <div class="sm-meta bot"><div class="sm-title" id="sm-title"></div><div class="sm-time" id="sm-time">0:00 / 0:00</div></div>
+      <div class="sm-spin"></div>
+      <div class="sm-pause"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="sm-tap" id="sm-tap"></div>
+      <div class="sm-bar" id="sm-bar"><div class="sm-bar-track"><div class="sm-bar-fill" id="sm-fill"></div></div></div>
+    </div>
+    <div class="sm-rail">
+      <button class="sm-btn" id="sm-prev" onclick="smGo(-1)" aria-label="השורטס הקודם" title="הקודם (↑)"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></button>
+      <button class="sm-btn" id="sm-next" onclick="smGo(1)" aria-label="השורטס הבא" title="הבא (↓)"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg></button>
+      <div class="sep"></div>
+      <button class="sm-btn" id="sm-mute" onclick="smToggleMute()" aria-label="השתקה" title="השתקה (M)"></button>
+      <button class="sm-btn" id="sm-auto" onclick="smToggleAuto()" aria-label="מעבר אוטומטי לשורטס הבא" title="מעבר אוטומטי בסיום"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+    </div>
+  </div>
+  <div class="sm-hint" id="sm-hint"><kbd>↑</kbd><kbd>↓</kbd> מעבר בין שורטס · <kbd>רווח</kbd> ניגון/עצירה · <kbd>M</kbd> השתקה · <kbd>Esc</kbd> יציאה</div>
 </div>
 
 <div id="toast"></div>
@@ -2229,6 +2346,17 @@ function renderContent() {
           </div>
         </div>`;
     }
+  } else if (section === 'shorts') {
+    headerHtml = `
+      <div class="sm-head">
+        <div>
+          <div class="ch-name">שורטס</div>
+          <div class="ch-sub">${vids.length} שורטס מהערוצים שלך</div>
+        </div>
+        ${vids.length ? `<button class="sm-launch${isPro() ? '' : ' locked'}" onclick="openShortsMode()">
+          <span class="sm-ico">${SM_ICO_PLAY}</span>מצב שורטס${isPro() ? '' : ' <span class="pro-tag">PRO</span>'}
+        </button>` : ''}
+      </div>`;
   } else if (section === 'search') {
     headerHtml = `
       <div class="channel-header">
@@ -2407,6 +2535,7 @@ function renderHomeSections(ct) {
       <div class="home-head">
         <h2 class="home-section-title">${x(sec.title)}</h2>
         <span class="home-count">${sec.vids.length}</span>
+        ${sec.id === 'shelf-shorts' ? `<button class="sm-chip${isPro() ? '' : ' locked'}" onclick="openShortsMode()" title="מצב שורטס">${SM_ICO_PLAY}מצב שורטס</button>` : ''}
         ${nav}
       </div>
       ${grid}
@@ -2792,6 +2921,260 @@ function toggleNotifPanel(force) {
   p.classList.toggle('open', open);
   if (open) renderNotifPanel();
 }
+
+/* ============ SHORTS MODE (PRO) ============ */
+// מצב שורטס: מסך מלא, מעבר בחצים/גלגלת/החלקה, והשורטס הבא מתחיל אוטומטית.
+const SM_AUTO_KEY = 'mytube_sm_auto';
+const SM_MUTE_KEY = 'mytube_sm_mute';
+let smOpen = false, smList = [], smIdx = 0, smPlayer = null, smReady = false;
+let smTick = null, smWheelAt = 0, smGoAt = 0, smErrRun = 0, smStartTimer = null, smHintTimer = null, smTouchY = null, smSwipedAt = 0;
+let smAuto = localStorage.getItem(SM_AUTO_KEY) !== '0';
+let smMuted = localStorage.getItem(SM_MUTE_KEY) === '1';
+const SM_ICO_VOL = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+const SM_ICO_MUTE = '<svg viewBox="0 0 24 24"><path d="M16.5 12A4.5 4.5 0 0014 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.8 8.8 0 0021 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 003.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>';
+const SM_ICO_PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+
+function smEl(id) { return document.getElementById(id); }
+
+function smCollect() {
+  if (section === 'shorts') return getSectionVideos().filter(v => v.isShort);
+  let list = allVideos.filter(v => v.isShort);
+  try { list = list.filter(applyChannelFilter); } catch (e) {}
+  return nfVisible(list);
+}
+
+function openShortsMode(startId) {
+  if (!isPro()) {
+    toast('מצב שורטס זמין למנויי PRO בלבד');
+    openProModal();
+    return;
+  }
+  const list = smCollect();
+  if (!list.length) { toast('אין שורטס להצגה'); return; }
+  closePip();
+  if (smEl('player-modal').classList.contains('open')) closePlayer();
+  smList = list.slice();
+  const at = startId ? smList.findIndex(v => v.id === startId) : 0;
+  smIdx = at > 0 ? at : 0;
+  smErrRun = 0;
+  smOpen = true;
+  smEl('sm').classList.add('open');
+  document.body.classList.add('sm-open');
+  smSyncToggles();
+  smRender(0);
+  smShowHint();
+  smEnsurePlayer();
+  if (!smTick) smTick = setInterval(smUpdateProgress, 250);
+}
+
+function closeShortsMode() {
+  if (!smOpen) return;
+  smOpen = false;
+  smEl('sm').classList.remove('open');
+  document.body.classList.remove('sm-open');
+  clearInterval(smTick); smTick = null;
+  clearTimeout(smStartTimer);
+  try { if (smPlayer && smReady) smPlayer.stopVideo(); } catch (e) {}
+}
+
+function smSyncToggles() {
+  smEl('sm-mute').innerHTML = smMuted ? SM_ICO_MUTE : SM_ICO_VOL;
+  smEl('sm-mute').classList.toggle('on', smMuted);
+  smEl('sm-auto').classList.toggle('on', smAuto);
+  smEl('sm-auto').title = smAuto ? 'מעבר אוטומטי: פעיל' : 'מעבר אוטומטי: כבוי (השורטס יחזור על עצמו)';
+}
+function smToggleMute() {
+  smMuted = !smMuted;
+  localStorage.setItem(SM_MUTE_KEY, smMuted ? '1' : '0');
+  try { if (smPlayer && smReady) { smMuted ? smPlayer.mute() : smPlayer.unMute(); } } catch (e) {}
+  smSyncToggles();
+}
+function smToggleAuto() {
+  smAuto = !smAuto;
+  localStorage.setItem(SM_AUTO_KEY, smAuto ? '1' : '0');
+  smSyncToggles();
+  toast(smAuto ? 'מעבר אוטומטי פעיל' : 'מעבר אוטומטי כבוי — השורטס יחזור על עצמו');
+}
+
+function smShowHint() {
+  const h = smEl('sm-hint');
+  h.classList.remove('gone');
+  clearTimeout(smHintTimer);
+  smHintTimer = setTimeout(() => h.classList.add('gone'), 4500);
+}
+
+function smFmt(t) { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); }
+
+function smRender(dir) {
+  const v = smList[smIdx];
+  if (!v) return;
+  const stage = smEl('sm-stage');
+  const thumb = 'https://i.ytimg.com/vi/' + encodeURIComponent(v.id) + '/hqdefault.jpg';
+  const poster = smEl('sm-poster');
+  poster.classList.remove('hide');
+  poster.src = thumb;
+  smEl('sm-ambient').src = thumb;
+  smEl('sm-title').textContent = v.title || '';
+  smEl('sm-chname').textContent = v.channelTitle || '';
+  smEl('sm-when').textContent = v.publishedAt ? timeAgo(v.publishedAt) : '';
+  const av = smEl('sm-av');
+  av.innerHTML = v.channelThumb ? '<img src="' + x(v.channelThumb) + '" alt="">' : x((v.channelTitle || '?').slice(0, 2));
+  smEl('sm-count').textContent = (smIdx + 1) + ' / ' + smList.length;
+  smEl('sm-prev').disabled = smIdx === 0;
+  smEl('sm-next').disabled = smIdx >= smList.length - 1;
+  smEl('sm-fill').style.width = '0%';
+  smEl('sm-time').textContent = '0:00 / 0:00';
+  stage.classList.remove('paused', 'go-next', 'go-prev');
+  stage.classList.add('loading');
+  if (dir) { void stage.offsetWidth; stage.classList.add(dir > 0 ? 'go-next' : 'go-prev'); }
+  try { recordWatch(v); } catch (e) {}
+}
+
+function smEnsurePlayer() {
+  if (smPlayer) { smLoad(); return; }
+  let tries = 0;
+  const make = () => {
+    if (!smOpen) return;
+    if (!window.YT || !YT.Player) {
+      if (++tries > 60) { toast('לא ניתן לטעון את נגן יוטיוב'); closeShortsMode(); return; }
+      setTimeout(make, 150); return;
+    }
+    smPlayer = new YT.Player('sm-yt', {
+      videoId: smList[smIdx].id,
+      playerVars: { autoplay: 1, controls: 0, rel: 0, playsinline: 1, modestbranding: 1, iv_load_policy: 3, fs: 0, disablekb: 1, origin: location.origin },
+      events: { onReady: smOnReady, onStateChange: smOnState, onError: smOnError }
+    });
+  };
+  make();
+}
+function smOnReady() {
+  smReady = true;
+  smLoad();
+}
+function smLoad() {
+  if (!smReady || !smPlayer) return;
+  const v = smList[smIdx];
+  if (!v) return;
+  try {
+    if (smMuted) smPlayer.mute(); else smPlayer.unMute();
+    smPlayer.loadVideoById(v.id);
+  } catch (e) {}
+  // אם הדפדפן חסם ניגון אוטומטי — מציגים כפתור הפעלה
+  clearTimeout(smStartTimer);
+  smStartTimer = setTimeout(() => {
+    try {
+      const st = smPlayer.getPlayerState();
+      if (smOpen && st !== 1 && st !== 3) { smEl('sm-stage').classList.remove('loading'); smEl('sm-stage').classList.add('paused'); }
+    } catch (e) {}
+  }, 3000);
+}
+function smOnState(e) {
+  const stage = smEl('sm-stage');
+  switch (e.data) {
+    case 1: // playing
+      clearTimeout(smStartTimer);
+      smErrRun = 0;
+      stage.classList.remove('loading', 'paused');
+      smEl('sm-poster').classList.add('hide');
+      break;
+    case 2: // paused
+      stage.classList.remove('loading');
+      stage.classList.add('paused');
+      break;
+    case 3: // buffering
+      stage.classList.add('loading');
+      break;
+    case 0: // ended
+      if (!smOpen) break;
+      if (smAuto) {
+        if (smIdx < smList.length - 1) smGo(1, true);
+        else toast('סיימת את כל השורטס 🎉');
+      } else {
+        try { smPlayer.seekTo(0, true); smPlayer.playVideo(); } catch (err) {}
+      }
+      break;
+  }
+}
+function smOnError() {
+  if (!smOpen) return;
+  smErrRun++;
+  toast('את השורטס הזה אי אפשר להפעיל כאן — מדלג לבא');
+  if (smErrRun < smList.length) setTimeout(() => { if (smOpen) smGo(1, true); }, 700);
+}
+
+function smGo(d, force) {
+  if (!smOpen) return false;
+  const now = Date.now();
+  if (!force && now - smGoAt < 280) return false;
+  const n = smIdx + d;
+  if (n < 0) return false;
+  if (n >= smList.length) { toast('זה השורטס האחרון'); return false; }
+  smGoAt = now;
+  smIdx = n;
+  smRender(d);
+  smLoad();
+  return true;
+}
+
+function smToggle() {
+  if (!smReady || !smPlayer) return;
+  try {
+    const st = smPlayer.getPlayerState();
+    if (st === 1 || st === 3) smPlayer.pauseVideo(); else smPlayer.playVideo();
+  } catch (e) {}
+}
+
+function smUpdateProgress() {
+  if (!smOpen || !smReady || !smPlayer) return;
+  try {
+    const d = smPlayer.getDuration(), t = smPlayer.getCurrentTime();
+    if (d > 0) {
+      smEl('sm-fill').style.width = Math.min(100, t / d * 100) + '%';
+      smEl('sm-time').textContent = smFmt(t) + ' / ' + smFmt(d);
+    }
+  } catch (e) {}
+}
+
+(function smBind() {
+  const tap = smEl('sm-tap'), bar = smEl('sm-bar'), root = smEl('sm');
+  if (!tap || !bar || !root) return;
+  tap.addEventListener('click', () => { if (Date.now() - smSwipedAt > 400) smToggle(); });
+  tap.addEventListener('touchstart', e => { smTouchY = e.touches[0].clientY; }, { passive: true });
+  tap.addEventListener('touchend', e => {
+    if (smTouchY === null) return;
+    const dy = smTouchY - e.changedTouches[0].clientY;
+    smTouchY = null;
+    if (Math.abs(dy) > 50) { smSwipedAt = Date.now(); smGo(dy > 0 ? 1 : -1); }
+  }, { passive: true });
+  bar.addEventListener('click', e => {
+    e.stopPropagation();
+    if (!smReady) return;
+    const r = bar.getBoundingClientRect();
+    try { smPlayer.seekTo(smPlayer.getDuration() * Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), true); } catch (err) {}
+  });
+  root.addEventListener('wheel', e => {
+    if (!smOpen) return;
+    e.preventDefault();
+    if (Math.abs(e.deltaY) < 18) return;
+    const now = Date.now();
+    if (now - smWheelAt < 550) return;
+    smWheelAt = now;
+    smGo(e.deltaY > 0 ? 1 : -1);
+  }, { passive: false });
+  document.addEventListener('keydown', e => {
+    if (!smOpen) return;
+    if (!isPro()) { closeShortsMode(); return; }
+    const k = e.key;
+    let used = true;
+    if (k === 'Escape') closeShortsMode();
+    else if (k === 'ArrowDown' || k === 'ArrowLeft' || k === 'PageDown' || k === 'j' || k === 'J') smGo(1);
+    else if (k === 'ArrowUp' || k === 'ArrowRight' || k === 'PageUp' || k === 'k' || k === 'K') smGo(-1);
+    else if (k === ' ') smToggle();
+    else if (k === 'm' || k === 'M') smToggleMute();
+    else used = false;
+    if (used) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+})();
 
 /* ============ PLAYER MODAL ============ */
 // למנויי PRO: הנגן נטען עם YouTube IFrame API (enablejsapi=1) כדי לאפשר
