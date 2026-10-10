@@ -1,37 +1,77 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>עברנו לדף חדש</title>
-    <!-- Loading Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyTube - עברנו לכתובת חדשה</title>
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/xgh73omp/image/upload/v1789899855/g1iwo09mhtzmmntgey9e.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f6f7f9; --bg3:#eceff4;
+  --txt:#14161b; --txt2:#4c5464;
+  --border:#e5e8ee; --shadow:rgba(16,24,40,.12);
+  --topbar:rgba(255,255,255,.86); --tint:rgba(255,0,0,.07);
+  --red:#ff0000; --red2:#cc0000;
+  --font:'Rubik',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0f0f0f; --bg2:#1a1a1a; --bg3:#262628;
+    --txt:#f2f2f3; --txt2:#a9adb5;
+    --border:rgba(255,255,255,.09); --shadow:rgba(0,0,0,.55);
+    --topbar:rgba(15,15,15,.86); --tint:rgba(255,0,0,.16);
+  }
+  .logo-img{filter:invert(1) hue-rotate(180deg) saturate(6);}
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--txt);font-family:var(--font);display:flex;flex-direction:column;overflow-x:hidden;}
+
+.topbar{height:56px;flex-shrink:0;display:flex;align-items:center;padding:0 20px;background:var(--topbar);border-bottom:1px solid var(--border);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);}
+.logo-img{height:26px;width:auto;display:block;user-select:none;-webkit-user-drag:none;}
+
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;}
+.card{width:100%;max-width:460px;text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:44px 32px 36px;box-shadow:0 12px 40px var(--shadow);animation:rise .45s cubic-bezier(.2,.8,.2,1) both;}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.card{animation:none}}
+
+.ico{width:72px;height:72px;margin:0 auto 22px;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center;}
+.ico svg{width:34px;height:34px;fill:var(--red);}
+h1{font-size:26px;font-weight:800;line-height:1.25;margin-bottom:10px;}
+p{font-size:15.5px;line-height:1.7;color:var(--txt2);margin-bottom:26px;}
+
+.go{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;text-decoration:none;font-weight:600;font-size:16px;padding:13px 28px;border-radius:28px;transition:background .2s,transform .2s;}
+.go:hover{background:var(--red2);transform:translateY(-1px);}
+.go:focus-visible{outline:3px solid var(--red);outline-offset:3px;}
+.go svg{width:18px;height:18px;fill:currentColor;transform:scaleX(-1);}
+
+.url{display:block;margin-top:18px;font-size:13.5px;color:var(--txt2);direction:ltr;word-break:break-all;}
+.url a{color:inherit;text-decoration:underline;text-underline-offset:3px;}
+.url a:hover{color:var(--red);}
+@media(max-width:600px){.card{padding:36px 22px 30px}h1{font-size:23px}}
+</style>
 </head>
-<body class="bg-red-600 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border-4 border-red-700">
-        
-        <div class="mb-6 flex justify-center">
-            <div class="bg-red-100 p-4 rounded-full">
-                <svg class="h-12 w-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
-                </svg>
-            </div>
-        </div>
+<body>
+<header class="topbar">
+  <img class="logo-img" src="https://res.cloudinary.com/xgh73omp/image/upload/v1789899597/sntt5pzs7lhk6qy40w0q.png" alt="MyTube">
+</header>
 
-        <h1 class="text-3xl font-extrabold text-red-700 mb-4">עברנו לדף חדש</h1>
-        <p class="text-gray-700 mb-8 text-lg leading-relaxed">
-            הדף שחיפשתם עבר למשכנו החדש. מוזמנים ללחוץ על הכפתור כדי לעבור ישירות:
-        </p>
-
-        <a href="https://mysube.com/" 
-           class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold text-lg px-8 py-3.5 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-red-300">
-            מעבר לדף החדש
-        </a>
+<main>
+  <section class="card" aria-labelledby="t">
+    <div class="ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 12h3v8h5v-6h4v6h5v-8h3L12 2z"/></svg>
     </div>
+    <h1 id="t">עברנו לכתובת חדשה</h1>
+    <p>האתר MyTube עבר לכתובת חדשה.<br>מעכשיו ממשיכים משם, וכל מה שהכרתם מחכה לכם שם.</p>
+    <a class="go" href="https://mysube.com/" rel="noopener">
+      מעבר לאתר החדש
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4v-2z"/></svg>
+    </a>
+    <span class="url"><a href="https://mysube.com/" rel="noopener">https://mysube.com/</a></span>
+  </section>
+</main>
 </body>
 </html>
