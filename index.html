@@ -48,6 +48,13 @@ p{font-size:15.5px;line-height:1.7;color:var(--txt2);margin-bottom:26px;}
 .go:focus-visible{outline:3px solid var(--red);outline-offset:3px;}
 .go svg{width:18px;height:18px;fill:currentColor;transform:scaleX(-1);}
 
+.nf{margin-top:26px;padding-top:24px;border-top:1px solid var(--border);}
+.nf h2{font-size:16px;font-weight:700;margin-bottom:6px;}
+.nf p{font-size:14px;line-height:1.65;margin-bottom:14px;}
+.go2{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--txt);text-decoration:none;font-weight:600;font-size:15px;padding:11px 24px;border:1.5px solid var(--border);border-radius:26px;transition:border-color .2s,color .2s,transform .2s;}
+.go2:hover{border-color:var(--red);color:var(--red);transform:translateY(-1px);}
+.go2:focus-visible{outline:3px solid var(--red);outline-offset:3px;}
+.go2 svg{width:17px;height:17px;fill:currentColor;transform:scaleX(-1);}
 .notice{display:flex;align-items:flex-start;gap:10px;text-align:right;margin:26px 0 0;padding:14px 16px;background:var(--tint);border:1px solid var(--border);border-radius:14px;font-size:14px;line-height:1.65;color:var(--txt);}
 .notice svg{width:20px;height:20px;flex-shrink:0;margin-top:2px;fill:var(--red);}
 .notice b{font-weight:600;}
@@ -74,9 +81,17 @@ p{font-size:15.5px;line-height:1.7;color:var(--txt2);margin-bottom:26px;}
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4v-2z"/></svg>
     </a>
     <span class="url"><a href="https://mysube.com/" rel="noopener">https://mysube.com/</a></span>
+    <div class="nf">
+      <h2>משתמשי נטפרי</h2>
+      <p>עד שהאתר ייפתח בנטפרי, אפשר להיכנס דרך אתר הביניים:</p>
+      <a class="go2" href="https://raw.githack.com/xnet3/mysube/main/index.html#/home" rel="noopener">
+        מעבר לאתר הביניים
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4v-2z"/></svg>
+      </a>
+    </div>
     <div class="notice" role="note">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-      <div><b>הפתיחה של האתר בנטפרי נמצאת בתהליך.</b><br>אין צורך לשלוח פניות בנושא. נעדכן כשהאתר ייפתח.</div>
+      <div><b>הפתיחה של האתר בנטפרי נמצאת בתהליך.</b><br>אין צורך לשלוח פניות בנושא.</div>
     </div>
   </section>
 </main>
